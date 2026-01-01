@@ -4,6 +4,7 @@ focuses on being able to actually work through concepts and communicating them c
 
 # File Structure
     -- Topic
+        - Notes
         -- Problem
             - Solutions
             - Notes
