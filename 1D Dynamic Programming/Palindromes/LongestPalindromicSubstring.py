@@ -1,3 +1,4 @@
+# Two Pointer
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         # The Bruteforce doesn't really give us any subproblems
@@ -39,5 +40,37 @@ class Solution:
                 r+=1
 
         return result
+
+# DP Solution
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        resStart = 0
+        length = 0
+        n = len(s)
+        
+        # Represents substrings that are palindromes or not
+        # for example - dababad
+        # if we know 'bab' is a palindrome (i = 2, j = 4)
+        # then if i=1, j=5, are the same letter, then 
+        # ababa is a palindrome
+        dp = [[False] * n for _ in range(n)]
+
+        # We start from the right because we need to know
+        # dp[i+1][j-1] before we can solve dp[i][j]
+        # Inside is solved before the outside
+        for i in range(n-1,-1,-1): 
+            for j in range(i,n):
+                # If the end letters match, and either its a basecase
+                # 1 letter -> always palindrome
+                # 2 letter -> only i and j need to match
+                # 3 letter -> we only need to check i and j again
+                # or the inside is a palindrome
+                if s[i] == s[j] and (j - i + 1 <= 3 or dp[i+1][j-1]):
+                    dp[i][j] = True
+                    if j - i + 1 > length:
+                        resStart = i
+                        length = j - i + 1
+                    
+        return s[resStart: resStart + length]
 
 
