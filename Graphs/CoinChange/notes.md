@@ -1,0 +1,3 @@
+Coming from Dynamic Programming, the BFS approach is very similar to bottom-up, where we are going through each coin, starting from the base case until we reach the amount. Reframing the question to realizing it is asking for the minimum coins which is the same as the shortest path to reaching the amount.
+
+From there it was pretty simple in figuring out our starting point for our BFS as well as our "neighbors", with one slight hiccup in marking visited. Originally, I forgot to mark the starting setup point (0), as visited before going into the main loop. This caused revisiting of certain "amounts", thus breaking the algorithm. After refactoring, I made sure to include the initial visitation in the setup, and marking new neighbors as visited as I add them into the queue.
