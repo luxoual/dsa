@@ -1,0 +1,9 @@
+This one was a toughy for sure. Root issue was that I didn't really fully understand the core principles of Kadane's Algorithm and was trying to use too much from the Maximum Sum Subarray variation.
+
+Some initial issues was not understand how continuity was being handled/maintained as we traverse through each value in an array. But this is where the concept of Dynamic Programming sort of intertwines with Kadane's Algorithm, where obviously at each index we have some type of calculation happening based on some previous calculation. However we don't need to know what was done to get the previous value, because it is handled by that previous calculation, we don't need to know how it did it.
+
+Another concept of Kadane's algorithm that was a little hard to see was the "extend or restart", where there are times when the previous value doesn't help our current calculation, at this current index. So sometimes, we end up RESTARTING from the current spot, because its a better choice then using our previous.
+
+# NOTE - What I missed the most for this question, was understanding that no matter what, that local/curr value or the most optimal value at an index, can't be the same or keep what the prefix was. No matter what, each prefix or answer at an index, is one that is the most optimal ending at that index (thus including that index).
+
+This highlights the principle/concept of local vs global for Kadane's algorithm. Where global, is the most optimal value we've seen so far (often the result), where the local, is the current most optimal value at the current index we are at. We compare local and global, and update when needed, but the state of the local at the end of the array isn't necessarily the most optimal value of the entire array.
