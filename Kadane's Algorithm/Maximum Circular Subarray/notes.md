@@ -4,6 +4,6 @@ In hindsight, the correct way to approach circular based questions, is to one st
 
 Try classifying answers that would be valid if it wasn't circular, then consider circular (wrapped vs non-wrapped). Can we apply the regular approach for a regular subarray and then maybe reuse it for the wrapped ones?
 
-# KEY - Reframing circular (wrapped) cases as something else (like "total - something (middle section)")
+# KEY - Reframing circular (wrapped) cases as something else (like "total - something (middle section)", or suffix + prefix)
 
 Once we reframe, we try figuring out if that "excluded" thing is a known problem that we could tackle or reuse some pattern on it.
