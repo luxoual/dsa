@@ -10,4 +10,4 @@ I was keeping track of the length so far + what comparison I'm expecting next, w
 
 I should be tracking the length of the best turbulent array so far + the last comparison sign. Because with this, I can one check if the previous comparison was 0, meaning it doesn't matter what the current comparison is, we can take it. AND then, we can use it to compare with the current comparison, to know if we are extending (alternating signs) or we are restarting the subarray.
 
-# Essentially remmeber, Kadane/DP is not about a rule/what to look for in the future, but keeping track of the past with exactly what you need, that you can use to create the optimal solution for the next iteration/subproblem.
+# Essentially remember, Kadane/DP is not about a rule/what to look for in the future, but keeping track of the past with exactly what you need, that you can use to create the optimal solution for the next iteration/subproblem.
