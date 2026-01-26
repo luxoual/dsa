@@ -73,4 +73,55 @@ class Solution:
             return cache[i][subset]
         
         return dfs(0, 0)
+
+# Initial Bottom-up approach
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        n = len(nums)
+        total = sum(nums)
+        if total % 2 != 0: return False
+        
+        # dp[i][j] = At index i, can I make this sum?
+        dp = [[False] * ((total // 2) + 1) for _ in range(n+1)]
+        dp[0][0] = True
+
+        for i in range(n):
+            if nums[i] > total // 2: return False
+            for j in range((total // 2) + 1):
+                if dp[i][j]:
+                    if j + nums[i] <= total // 2:
+                        if j + nums[i] == total // 2: return True
+                        dp[i+1][j + nums[i]] = True
+                    dp[i+1][nums[i]] = True
+                    dp[i+1][j] = True
+        
+        return False
+    
+# Optimized Bottom-up approach (using a set so we don't have to check all sums)
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        n = len(nums)
+        total = sum(nums)
+        if total % 2 != 0: return False
+        half = total // 2
+        # dp = can i make this number w/ the numbers I've seen so far
+        dp = set([0])
+
+        for i in range(n):
+            newDp = set(dp)
+            for num in dp:
+                if num + nums[i] == half: return True
+                newDp.add(num + nums[i])
+            dp = newDp
+
+        return False
+
+
+        
+
+
+        
+
+
+        
         
