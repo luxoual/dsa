@@ -44,3 +44,37 @@ class Solution:
         
         dfs(0)
         return result
+    
+# Sorting + Min-Heap Solution O(n log n) time, O(n) space
+import heapq
+class Solution:
+    def minMeetingRooms(self, intervals: List[Interval]) -> int:
+        # Using the concept we learned from NonOverlappingIntervals
+        # We always want to keep or take the timeline with the earliest
+        # ending time, becaus it leaves more space for more meetings.
+        # sorting by start, any non-overlapping intervals go into the same
+        # room, all we have ot hceck is if the start >= the current end
+        # of a room. If it overlaps, we can start a new room, and we always
+        # try fitting the interval into the earliest ending room,
+        # if it doesnt fit in the earliest endign room, it wont fit in
+        # any rooms that end later than it
+
+        # We sort by start, because we have to process the intervals
+        # sequentially like how time flows, any intervals we end up
+        # at will start after the previous ones
+        n = len(intervals)
+        if n <= 1:
+            return n
+        intervals.sort(key = lambda i: i.start)
+        rooms = [intervals[0].end]
+
+        for i in range(1, n):
+            interval = intervals[i]
+            if interval.start >= rooms[0]:
+                # It fits, so replace 
+                heapq.heappop(rooms)
+            # It overlaps, so we start a new one
+            # Both times we push it in
+            heapq.heappush(rooms, interval.end)
+        
+        return len(rooms)
