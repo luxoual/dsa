@@ -34,3 +34,30 @@ class Solution:
 
         return result
 
+# Feb 18th redo
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        # If the curr subarray that we've seen so far, is
+        # less than the curr number we could add, then we 
+        # restart the subarray, we keep track of a running max
+
+        # EDIT: The actual "state", that indicates that its not
+        # worth keeping, is when keeping it absolutely can't 
+        # assist teh most optimal solution, where in this case
+        # if any curr subarray sum, is negative, then we should
+        # replace it, not just when the curr subarray sum is less
+        # than the curr number.
+
+        result = nums[0]
+        n = len(nums)
+        curr = nums[0]
+        for start in range(1,n):
+            if curr <= 0:
+                # Not worth keeping
+                curr = nums[start]
+            else:
+                curr += nums[start]
+            result = max(result, curr)
+        
+        return result
+
