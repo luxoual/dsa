@@ -10,3 +10,6 @@ It was this main part that would have allowed me to eliminate starting points an
 
 The other main pitfall that I was sort of close to, was just realizing that if the total gas at the stations was less than the amount of gas it took to reach all the stations, then no matter what there isn't a solution, because even if we took all the gas, we still wouldnt have enough.
 
+# 2nd Review Notes
+
+I think I have a better understanding of why the gas stations between i -> i+3, are also invalid if we fail at i+3, since the only reason we reach this far is because our running is always positive, and if it wasn't then we would have failed earlier. Which means that implies theres some extra gas (or none) that we are getting from those earlier gas stations. Which we can represent as gain[i...], so if the gas we get from i+1 -> i+3, is gain[i+1] + gain[i+2] + gain[i+3], then no matter what since we know gain[i...] is either >= 0, it can only help us. Making the in betweens worse.
