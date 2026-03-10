@@ -6,3 +6,5 @@ However in terms of sorting, I didn't realize I could just sort all the tickets 
 From here, I was stuck on trying to return the final result through the return values of the dfs calls, but in reality I needed to use a centralized result array, that dfs calls would append and pop from it, which in hindsight is a clear pattern of backtracking solutions using DFS.
 
 Something else I honestly didn't consider was to undo the adjacency list, I would try inserting into the middle of the array which is a O(N), operation and is something I always try staying away from because I know its inefficient.
+
+ALSO instead of keeping track of how many tickets we used with an external "used" variable, we could just notice that the length of our result would just be tickets + 1, when we used all of our tickets.
