@@ -28,8 +28,7 @@ class UnionFind:
             self.rank[rootA]+=1
         
         return True
-class Solution:
-    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+def minCostConnectPoints(self, points: List[List[int]]) -> int:
         result = 0
         n = len(points)
         def manhattan(x1,y1,x2,y2):
@@ -44,10 +43,13 @@ class Solution:
         edges.sort()
 
         uf = UnionFind(n)
+        used = 0
         for edge in edges:
             if uf.union(edge[1], edge[2]):
                 # We can add this edge becasue they aren't
                 # already connected
                 result += edge[0]
-        
+                used+=1
+                if used == n-1: break
+                
         return result
