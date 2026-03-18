@@ -53,3 +53,36 @@ def minCostConnectPoints(self, points: List[List[int]]) -> int:
                 if used == n-1: break
                 
         return result
+
+# Prim's Algorithm O(N^2)
+class Solution:
+    def minCostConnectPoints(self, points: List[List[int]]) -> int:
+        result = 0
+        n = len(points)
+        def manhattan(x1,y1,x2,y2):
+            return abs(x1 - x2) + abs(y1 - y2)
+        
+        distances = [float('inf')] * n
+        distances[0] = 0 # Starting at 0 distance from point 0
+        visited = [False] * n
+        curr = 0
+        edges = 0
+
+        while edges != n-1: # Once we connect everything
+            visited[curr] = True
+            nextNode = -1 # We needa keep track of the next place we are moving
+            for i in range(1,n):
+                if not visited[i]:
+                    distances[i] = min(distances[i], manhattan(points[curr][0], points[curr][1], points[i][0], points[i][1]))
+                    if nextNode == -1 or distances[nextNode] > distances[i]:
+                        nextNode = i
+            result += distances[nextNode]
+            curr = nextNode
+            edges += 1
+
+        return result
+        
+            
+
+    
+    
