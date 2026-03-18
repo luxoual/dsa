@@ -19,3 +19,9 @@ Kruskal's Algorithm, essentially means we take a list of edges which have all th
 Typically you would use Kruskal's Algorithm, if you already have the adjacency list / costs of edges. Besides for the sorting and going through the edges, the final piece is Union-Find. As the name suggests, it literally tells you if 2 points/nodes are in the same connected group, whether it be indirectly or directly. Using a list of parents, where each index starts with being its own parent, and as you connect 2 nodes (union), the parents get updated with the one with the highest rank between the 2. If 2 nodes already have the same parent (find), then we don't do any operations and just return False.
 
 If we are able to successfully combine 2 nodes/points, on the current edge that we are on (as we are iterating through the sorted list), then we add that cost of the edge to our result.
+
+# Prim's Algo
+
+Prim's is another algorithm that is mean't to solve MST problems, but usually this one is opted for when we don't already have a list of all the edges. The main concept of Prim's is essentially starting at any node, and from there we calculate the next closest node, and keep track of the running smallest distances that we run into. In a non-optimized way, we can add all these edges from whatever we visit into a heap, and we just consistently pop the next smallest edge, and we add in any new edges to nodes we haven't visited yet.
+
+The optimized way is just to keep track of a visited array and a global distances array. We set the distances array to infinity, and as we start at one node, we track the global smallest distance to that node in the distances array (index represents corresponding point). After each node, we update to the nextNode which is the node with the next smallest distance. Once we process a total of n - 1 edges, then we know that we connected everything and we can just return the result we have built so far.
