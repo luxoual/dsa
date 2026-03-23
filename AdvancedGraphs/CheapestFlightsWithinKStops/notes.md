@@ -2,3 +2,12 @@
 Initially when I looked at this, I saw weighed edges and looking for the minimum cost, so the first thing I think about is Dijkstras or BFS. However when I saw that it had to be within K stops, it was sorta a curve ball that made me defer from going straigh to that solution.
 
 So, I opted for a bruteforce approach first, which was DFS Backtracking, where I prune early whenever I go to too many stops, but this does involve me going to paths at random and not the shortest options I have.
+
+# Dijkstras w/ twist
+So after looking at the first solution, I saw that they used Dijkstras which makes sense. After following the typical dijkstras pattern, I ran into the issue of one (not remembering how Dijkstras worked but now I remember its creating the shortest path between 2 nodes by calculating the shortest paths to the nodes along the shortest path).
+
+This was a special case though, because instead of using a visited array to keep track of not re-visiting nodes, we instead come into the issue of there being multiple ways to get to a node, depending on how many stops you go through. So we can't mark a node visited just because we got there with the lowest cost, but we also have to keep track of how many stops we took to get there.
+
+This involved keeping track of more than just a distances array (for pruning of longer paths than we need), but also how many stops it took. This was done with an array of [float('inf') * (k+2) for _ in range(n)]. Where k was the max number of stops we could make. We used (k+2), because the total number of flights that one could take was k+1, (if we had only the src & dst node, we have 0 stops but still 1 edge used).
+
+You could technically not use a distance array, but you would lose alot of time without pruning, because it would give you the shortest path you can take with `X` stops. The typical heap would have the smallest valid state (smallest distance, with a valid number of stops), at the top of the min heap. The first time we find the 'dst' node, would be the first valid time we reach that node, so we can return directly.
