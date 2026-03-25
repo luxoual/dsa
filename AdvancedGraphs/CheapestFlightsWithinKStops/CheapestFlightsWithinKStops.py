@@ -65,3 +65,26 @@ class Solution:
                     distances[nei[1]][stops+1] = newDst
                     heapq.heappush(heap, (newDst, nei[1], stops + 1))
         return -1
+
+# Bellman-Ford Algorithm (not most optimized but is simple to understand)
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # The finalized prices, at this current level/layer
+        # of our traversal
+        prices = [float('inf')] * n
+        prices[src] = 0
+        
+        for i in range(k + 1):
+            # Go through every single edge
+            temp = prices[::] # Copy
+            for s, d, p in flights:
+                price = prices[s] + p
+                if price < temp[d]:
+                    temp[d] = price
+            prices = temp
+        
+        return prices[dst] if prices[dst] != float('inf') else -1
+
+
+
+
