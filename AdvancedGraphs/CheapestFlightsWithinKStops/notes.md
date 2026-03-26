@@ -20,3 +20,10 @@ The core of the algorithm is sort of similar to BFS with the idea of layer by la
 We keep track of a global "prices" array, which will represent the shortest path to each of the nodes in our problem. "prices" is size n, where each value is set to float('inf'), except for our src node, where we set the shortest path to that to 0. From here we start doing our layer by layer traversal by using a 'for' loop from 0 to k + 1. On each layer, we keep a copy array 'temp', that is a copy of the current state of "prices". We then go through all of our edges, where the cost of reaching node DEST, is prices[SRC] + cost. IF this newCost is less than temp[DEST], then we save it into our temporary array. NOTICE that we are always checking prices[SRC] and not temp[SRC], because we want to calculate the newCost based on whatever we can reach at this current layer.
 
 AFTER going through all of the edges for this iteration, we REPLACE the 'prices' array, with our 'temp' array. Because now, the values in our 'prices' array, is the current shortest path to all those nodes at this current layer. By the time, we go through k+1 layers, prices[DEST] will either be float('inf') which means we couldn't reach it, or the shortest path to node [DEST] in K stops which is K+1 layer traversals.
+
+# Bellman-Ford Optimized w/ Queue
+The few main bottlenecks that we had in the Bellman-Ford approach was that we needed to go through all of the edges, even if we didn't reach any of the start nodes yet, AND we also had to repeatedly create a temporary array over and over again for each layer.
+
+Using a queue, we removed the need for keeping track of a global prices array AND a temporary array, because we would only go through edges of a node that we were currently at. For each entry into the queue, we also keep track of how many stops + distance was travelled along that path, and we save the best paths to each node in our global prices array. We also do some pruning, by only adding paths that are better than paths we have previously.
+
+From first glance this algorithm looks really really similar to both BFS and Dijkstras.
