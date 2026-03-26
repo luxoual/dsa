@@ -84,6 +84,55 @@ class Solution:
             prices = temp
         
         return prices[dst] if prices[dst] != float('inf') else -1
+    
+# Bellman-Ford Algorithm (optimized, using a queue to save time on traversing all edges + copying arrays)
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        # Bellman Ford's Algorithm for finding the 
+        # shortest path in max k stops
+
+        # Involves layer by layer traversal (sorta like BFS)
+        # Where the number of layers we traverse in this case
+        # will be k+1, and at each layer traversal, we go
+        # through all of the edges we have
+
+        # We keep track of 2 arrays:
+        # a distances array
+        # which keeps track of the shortest distances to each
+        # point, at this current level
+        # and a temporary array
+        # which is a copy of the distances array that gets modified
+        # during the traversal, and at the end, we sync the
+        # temporary array to the distances array
+
+        # Adjacency List
+        adj = defaultdict(list)
+        for flight in flights:
+            adj[flight[0]].append((flight[2], flight[1]))
+        
+        # Starting off with one point
+        distances = [float('inf')] * n
+        distances[src] = 0
+
+        q = deque([(0, src, 0)])
+        while q:
+            c, curr, stops = q.popleft()
+            
+            for cost, nei in adj[curr]:
+                # The cost coming from start on this edge
+                price = c + cost
+                # If its cheaper than our current distance
+                # replace it in our temp
+                if price < distances[nei] and stops <= k:
+                    distances[nei] = price
+                    q.append((price, nei, stops + 1))
+            # replace at the end because distances
+            # holds our distances at that level, and
+            # we need that until we go through all edges
+        
+        return distances[dst] if distances[dst] != float('inf') else -1
+
+
 
 
 
