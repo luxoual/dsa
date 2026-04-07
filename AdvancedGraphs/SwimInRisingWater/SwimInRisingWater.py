@@ -32,31 +32,42 @@ class Solution:
 # Dijkstra's Algorithm
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
-        # Attempting Dijkstras attempt
-        # visited set with (x,y) coordinates
-        # heap with (water, x, y)
-        # whenever we pop from the heap, its the least
-        # amount of water to reach this cell
-        # so we add it to visited
-        # We traverse through the directions, using
-        # max(water, grid[nx][ny]), if we find any
-        # visited cells, then we just skip this one,
-        # the first time we pop from the heap with
-        # the bottom right cell, we just return
-        visited = set()
+        # Dijkstras algorithm
+        # So we know that we can reach any of the cells on the grid
+        # if the time is >= the elevation of a cell.
+        # Given this, we know that our answer for the minimum time/water
+        # is in between the elevation of the bottom right cell and
+        # the greatest elevation in the entire grid.
+
+        # So for each cell, we want to know the minimum amount of time
+        # needed to pass to reach this spot, note that it doesn't matter
+        # how we get there, just the least amount of time that needed
+        # to pass to reach here, starting from the top left square
+
         n = len(grid)
+        # we're going to sort by the time it takes to reach this cell
+        # (time/water, x, y)
         heap = [(grid[0][0], 0, 0)]
-        directions = [(0,1), (-1,0), (1,0), (0,-1)]
+        directions = [(0,1), (1,0), (-1,0), (0,-1)]
+        visited = [[False] * n for _ in range(n)]
+        # When do we mark a cell as visited? The first time we pop that cell
+        # because it'll be the smallest time that we reach that cell
         while heap:
             water, x, y = heapq.heappop(heap)
             if x == n-1 and y == n-1: return water
-            if (x,y) in visited: continue
-            visited.add((x,y))
+            if visited[x][y]: continue # Cells we already finalized
 
+            # Not visited yet and its not the destination
+            # So lets mark this as visited and the shortest
+            # time to this cell
+            visited[x][y] = True
             for dx, dy in directions:
                 nx, ny = dx + x, dy + y
-                if 0 <= nx < n and 0 <= ny < n and (nx,ny) not in visited:
+
+                if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
+                    # only cells we haven't visited yet
                     heapq.heappush(heap, (max(water, grid[nx][ny]), nx, ny))
+
 
 
 
