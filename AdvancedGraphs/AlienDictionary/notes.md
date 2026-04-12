@@ -17,3 +17,7 @@ So our DFS function if it returns TRUE, that means that starting/going down from
 Oh also since its postorder, we have to reverse our result at the end since we assemble it in reverse order.
 
 # NOTE if we went with BFS instead, we would assemble it in forward order, processing letters that have nothing that come before it, and we sort of just rinse and repeat, with letters that have the same "degree".
+
+^^ After completing this solution, it was pretty much exactly as described. We have a indegrees dictionary, that essentially maps every letter to how many letters have to come before this character. As we go through the characters with indegrees[char] == 0, we decrement their neighbors indegrees[nei], by 1 and add it to the queue if they have no more "dependencies" that come before it.
+
+Another thing though is that, in the case that we find repeat constraints (like A < B twice), then we don't want to increment indegrees again because its the same letter as a dependency. So we have to check if we already found B before in adj[A], but still break since we found a differing letter.
