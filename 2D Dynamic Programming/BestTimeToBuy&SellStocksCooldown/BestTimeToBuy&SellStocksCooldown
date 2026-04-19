@@ -1,7 +1,6 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
-
         # Whats the most amount of profit I can make starting from day i?
         # When we aren't holding something, we can buy, and we go into debt
         # when we sell, we add the whole price, because thats what we sell it for
@@ -16,14 +15,18 @@ class Solution:
             if i >= n:
                 return 0
 
+            if not holding:
+                if cache[1][i] != -1: return cache[1][i]
+            else:
+                if cache[0][i] != -1: return cache[0][i]
+
+
             best = max(0, backtrack(i+1, holding))
             if not holding:
                 # buy
-                if cache[1][i] != -1: return cache[1][i]
                 best = max(best, -prices[i] + backtrack(i+1, True))
             else:
                 # sell (cooldown -> i+2)
-                if cache[0][i] != -1: return cache[0][i]
                 best = max(best, prices[i] + backtrack(i+2, False))
             # keep holding
             if holding:
