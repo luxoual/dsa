@@ -59,14 +59,13 @@ class Solution:
         # can reach an amount with different coins
 
         n = len(coins)
-        coins.sort()
         # We start with 0 ways to get each amount with all
         # lengths of coins
         dp = [[0] * (amount + 1) for _ in range(n+1)]
 
         # Base setup
         # Always 1 way to get to 0, no matter what coins we got
-        for i in range(n):
+        for i in range(n+1):
             dp[i][0] = 1
 
         # Starting with the very last coin, we move backwards
@@ -79,9 +78,8 @@ class Solution:
         
         for i in range(n-1, -1, -1):
             for a in range(amount+1):
+                dp[i][a] = dp[i+1][a]
                 if a >= coins[i]:
-                    # Skip this coin
-                    dp[i][a] += dp[i+1][a]
                     # Take this coin
                     dp[i][a] += dp[i][a-coins[i]]
         
