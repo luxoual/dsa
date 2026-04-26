@@ -10,3 +10,11 @@ OR, we can skip this current number and proceed with the same leftovers but only
 # DFS & Memoization
 
 We cache all possible amounts that we can have depending on how many coins we have available. So we create a cache of [-1] * amount + 1, which represents all the possible leftovers we can have, and then have [-1] * amount + 1 for _ in range(n), so we cache all the different leftovers we can get at each size of our coin pool.
+
+# Iteration + Tabulation
+
+Starting from the base case, we define a 2D Array, which represents all the amounts that we can have, with a certain amount of coins (by index). From here, we define the base case of, if we ever have an amount of 0, at all indexes, then thats ONE way to get this amount. 
+
+Going backwards, from having just 1 coin (i = n-1), and our recurrence relation of the number of ways to reach "amount" at this current index, is the ways to reach "amount" at i+1 & the ways to reach "amount - coins[i]" at i.
+
+We iterate going backwards through the coins, but also through all possible amounts from 0 -> amount.
