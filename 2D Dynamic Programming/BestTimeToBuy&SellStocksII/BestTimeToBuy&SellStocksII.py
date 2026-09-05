@@ -37,3 +37,41 @@ class Solution:
             return cache[(stock, index)]
 
         return dp(None, 0)
+
+
+# Second Solution Faster
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        # Greedy
+        # At each index we have the option to skip
+        # and if we are holding something then we can sell
+        # if we are not holding something then we can buy
+        # The most amount of money we can make at this square
+        # is whether we sell, buy, or hold at this spot + the max
+        # amount of profit we can make at the next square
+
+        n = len(prices)
+        cache = [[-1] * n for _ in range(2)]
+
+        def dp(holding, index):
+            # holding = 0 or 1
+            if index >= n:
+                # Can't make any profit and basecase
+                return 0
+
+            if cache[holding][index] != -1:
+                return cache[holding][index]
+
+            cache[holding][index] = dp(holding, index + 1)
+            if holding:  # Sell
+                cache[holding][index] = max(
+                    cache[holding][index], prices[index] + dp(0, index + 1)
+                )
+            else:  # Buy
+                cache[holding][index] = max(
+                    cache[holding][index], -prices[index] + dp(1, index + 1)
+                )
+
+            return cache[holding][index]
+
+        return dp(0, 0)
