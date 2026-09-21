@@ -33,3 +33,52 @@ class Solution:
             return cache[(i, latest)]
 
         return dp(0, 0)
+
+
+class Solution:
+    def jobScheduling(
+        self, startTime: list[int], endTime: list[int], profit: list[int]
+    ) -> int:
+        # For scheduling, we want to handle dealing with ranges that could be
+        # in between other times by dealing with ranges sorted in order by
+        # startTime
+
+        # Zip makes tuples from the arrays given as params
+        # (startTime[i], endTime[i], profit[i])
+        jobs = sorted(zip(startTime, endTime, profit))
+
+        # What is the state at each step, we can either take a job
+        # or skip it, we can also have different endTimes
+        # at each index that we get to
+        n = len(startTime)
+        cache = [-1] * n
+
+        def bs(i, j, end):
+            result = j
+            while j > i:
+                m = (j + i) // 2
+                if jobs[m][0] >= end:
+                    # Try lower
+                    j = m
+                    result = m
+                else:
+                    # Try higher
+                    i = m + 1
+            return result
+
+        def dp(i):
+            if i == n:
+                return 0  # We went through all jobs
+
+            if cache[i] != -1:
+                return cache[i]
+
+            # Traversing
+            # No Take
+            # If we take then the next one has to have a start after i's end
+            j = bs(i + 1, n, jobs[i][1])
+            cache[i] = max(dp(i + 1), jobs[i][2] + dp(j))
+
+            return cache[i]
+
+        return dp(0)
