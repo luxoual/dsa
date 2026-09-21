@@ -10,4 +10,4 @@ After getting some hints, the thing that would handle those in between situation
 
 # Slight optimizaiton
 
-We could also optimize the sorting by using a binary search, but thats a bit extra work that I decided to not do but its good to know.
+We could also optimize finding the next job to schedule by using binary search on the sorted list of jobs, but also for an optimizaiton on memory, we actually don't need to track the endTime because we are always essentially just replacing the endTime with the job that we are going to take, so at index I, if we decide to take the index, we can just find the next index that we want to use via binarySearch, and at that level we can already compare if its a valid job by comparing it to the endTime of job[i].
